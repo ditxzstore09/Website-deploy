@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deploy Website By @DITXZZ_XD - Upload File</title>
+    <style>
+        /* Reset dan variabel */
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #7209b7;
+            --success: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --border: #dee2e6;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Background Video */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .video-background video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+        
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: -1;
+        }
+        
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: rgba(67, 97, 238, 0.9);
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+        
+        nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Main Content */
+        main {
+            padding: 3rem 0;
+            min-height: calc(100vh - 140px);
+        }
+        
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            color: #e0e0e0;
+        }
+        
+        /* Upload Section */
+        .upload-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .upload-area {
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: var(--transition);
+            margin-bottom: 2rem;
+            cursor: pointer;
+        }
+        
+        .upload-area:hover {
+            border-color: var(--primary);
+            background: rgba(67, 97, 238, 0.1);
+        }
+        
+        .upload-area i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .upload-area h3 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .upload-area p {
+            color: #b0b0b0;
+            margin-bottom: 1.5rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--primary);
+        }
+        
+        /* File List */
+        .file-list {
+            margin-top: 2rem;
+        }
+        
+        .file-list h3 {
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .file-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .file-icon {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        .file-actions button {
+            background: none;
+            border: none;
+            color: #b0b0b0;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: var(--transition);
+        }
+        
+        .file-actions button:hover {
+            color: var(--primary);
+        }
+        
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: #b0b0b0;
+            padding: 1.5rem 0;
+            text-align: center;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .upload-section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Background Video -->
+    <div class="video-background">
+        <video autoplay muted loop>
+            <source src="https://files.catbox.moe/373wsu.mp4" type="video/mp4">
+            Browser Anda tidak mendukung video HTML5.
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+    
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <span>DeployWeb</span>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-home"></i> Beranda</a></li>
+                        <li><a href="#"><i class="fas fa-history"></i> Riwayat</a></li>
+                        <li><a href="#"><i class="fas fa-cog"></i> Pengaturan</a></li>
+                        <li><a href="#"><i class="fas fa-question-circle"></i> Bantuan</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <section class="hero">
+                <h1>Deploy Website Anda dengan Mudah</h1>
+                <p>Upload file website Anda dan deploy dengan satu klik. Dukungan untuk HTML, CSS, JavaScript, dan berbagai framework modern.</p>
+            </section>
+            
+            <section class="upload-section">
+                <div class="upload-area" id="dropArea">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h3>Upload File Website Anda</h3>
+                    <p>Seret file ke sini atau klik untuk memilih file</p>
+                    <input type="file" id="fileInput" multiple style="display: none;">
+                    <button class="btn" onclick="document.getElementById('fileInput').click()">
+                        <i class="fas fa-folder-open"></i> Pilih File
+                    </button>
+                </div>
+                
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <p>Atau</p>
+                </div>
+                
+                <div style="text-align: center;">
+                    <button class="btn btn-secondary">
+                        <i class="fab fa-github"></i> Import dari GitHub
+                    </button>
+                    <button class="btn btn-secondary" style="margin-left: 10px;">
+                        <i class="fas fa-link"></i> Deploy dari URL
+                    </button>
+                </div>
+                
+                <div class="file-list">
+                    <h3><i class="fas fa-file"></i> File Terupload</h3>
+                    <div id="fileListContainer">
+                        <p style="text-align: center; color: #b0b0b0;" id="emptyMessage">Belum ada file yang diupload</p>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button class="btn" style="padding: 1rem 2rem; font-size: 1.1rem;">
+                        <i class="fas fa-rocket"></i> Deploy Sekarang
+                    </button>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 DeployWeb. Semua hak dilindungi.</p>
+            <p>Dibuat dengan <i class="fas fa-heart" style="color: #e74c3c;"></i> untuk developer</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Fungsi untuk menangani upload file
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            handleFiles(e.target.files);
+        });
+        
+        const dropArea = document.getElementById('dropArea');
+        
+        // Mencegah perilaku default untuk event drag
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        // Highlight drop area ketika file di-drag
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropArea.addEventListener(eventName, highlight, false);
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, unhighlight, false);
+        });
+        
+        function highlight() {
+            dropArea.style.borderColor = '#4361ee';
+            dropArea.style.backgroundColor = 'rgba(67, 97, 238, 0.1)';
+        }
+        
+        function unhighlight() {
+            dropArea.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+            dropArea.style.backgroundColor = 'transparent';
+        }
+        
+        // Tangani file yang di-drop
+        dropArea.addEventListener('drop', handleDrop, false);
+        
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            handleFiles(files);
+        }
+        
+        function handleFiles(files) {
+            const fileListContainer = document.getElementById('fileListContainer');
+            const emptyMessage = document.getElementById('emptyMessage');
+            
+            if (files.length > 0) {
+                emptyMessage.style.display = 'none';
+            }
+            
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                
+                // Dapatkan ikon berdasarkan tipe file
+                let fileIcon = 'fa-file';
+                if (file.type.includes('image')) fileIcon = 'fa-file-image';
+                else if (file.type.includes('text') || file.name.endsWith('.html') || file.name.endsWith('.css') || file.name.endsWith('.js')) 
+                    fileIcon = 'fa-file-code';
+                else if (file.type.includes('zip')) fileIcon = 'fa-file-archive';
+                
+                fileItem.innerHTML = `
+                    <div class="file-info">
+                        <i class="fas ${fileIcon} file-icon"></i>
+                        <span>${file.name}</span>
+                    </div>
+                    <div class="file-actions">
+                        <button title="Hapus"><i class="fas fa-trash"></i></button>
+                    </div>
+                `;
+                
+                // Tambahkan event listener untuk tombol hapus
+                fileItem.querySelector('button').addEventListener('click', function() {
+                    fileItem.remove();
+                    if (fileListContainer.children.length === 1) {
+                        emptyMessage.style.display = 'block';
+                    }
+                });
+                
+                fileListContainer.appendChild(fileItem);
+            }
+        }
+        
+        // Animasi untuk tombol deploy
+        document.querySelector('.btn').addEventListener('mouseover', function() {
+            this.style.transform = 'translateY(-2px)';
+        });
+        
+        document.querySelector('.btn').addEventListener('mouseout', function() {
+            this.style.transform = 'translateY(0)';
+        });
+    </script>
+</body>
+</html>
